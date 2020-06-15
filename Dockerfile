@@ -1,20 +1,10 @@
-ARG BASE_IMG
-FROM ${BASE_IMG} as noaudio
+FROM python as noaudio
 
 LABEL maintainer="Ryan Foster <phasecorex@gmail.com>"
 
-ARG DRONE_COMMIT_SHA
-ENV PCX_DISCORDBOT_COMMIT ${DRONE_COMMIT_SHA}
 ENV PCX_DISCORDBOT_TAG noaudio
 
 RUN set -eux; \
-# Check that DRONE_COMMIT_SHA exists
-    if [ "x$DRONE_COMMIT_SHA" = "x" ]; then \
-        echo Build argument 'DRONE_COMMIT_SHA' needs to be set and non-empty.; \
-        exit 1; \
-    else \
-        echo DRONE_COMMIT_SHA=${DRONE_COMMIT_SHA}; \
-    fi; \
 # Install Red-DiscordBot dependencies
     apt-get update; \
     apt-get install -y --no-install-recommends \
